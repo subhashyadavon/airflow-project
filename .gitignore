@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.egg-info/
+.installed.cfg
+*.egg
+.mypy_cache/
+
+# Airflow
+logs/
+airflow.db
+*.pid
+airflow-webserver.err
+airflow-webserver.out
+standalone_admin_password.txt
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# Environment & Secrets
+.env
+*.key
+*.secret
+*.pem
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

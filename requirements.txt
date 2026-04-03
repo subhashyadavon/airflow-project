@@ -1,0 +1,21 @@
+# apache-airflow is already in the base image
+apache-airflow-providers-standard
+apache-airflow-providers-amazon
+apache-airflow-providers-postgres
+psycopg2-binary
+types-psycopg2
+requests
+types-requests
+mypy
+pandas
+pandas-stubs
+streamlit
+boto3
+boto3-stubs[s3]
+sqlalchemy
+types-sqlalchemy
+python-dotenv
+scapy
+spacy
+regex
+altair

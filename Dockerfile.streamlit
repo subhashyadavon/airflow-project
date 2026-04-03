@@ -1,0 +1,24 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies for postgres
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq-dev \
+    build-essential \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy only requirements first to leverage Docker cache
+COPY requirements.txt .
+# Filter out airflow packages for the streamlit container to keep it light
+RUN pip install --no-cache-dir pandas streamlit sqlalchemy psycopg2-binary altair python-dotenv boto3
+
+# Copy the source code and dashboard
+COPY src/ /app/src/
+COPY dashboard/ /app/dashboard/
+
+EXPOSE 8501
+
+WORKDIR /app/dashboard
+CMD ["streamlit", "run", "dashboard.py", "--server.port=8501", "--server.address=0.0.0.0"]
