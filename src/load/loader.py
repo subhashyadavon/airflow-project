@@ -41,7 +41,7 @@ class JobLoader:
                     # Batch Insert Jobs (UPSERT)
                     job_values = [
                         (
-                            job['job_id'], job['title'], job['company'], job['location'],
+                            job['job_id'], job['title'], job['role'], job['company'], job['location'],
                             job['salary_min'], job['salary_max'], job['avg_salary'],
                             job['date_posted']
                         )
@@ -49,10 +49,11 @@ class JobLoader:
                     ]
 
                     insert_job_query = """
-                        INSERT INTO jobs (job_id, title, company, location, salary_min, salary_max, avg_salary, date_posted)
+                        INSERT INTO jobs (job_id, title, role, company, location, salary_min, salary_max, avg_salary, date_posted)
                         VALUES %s
                         ON CONFLICT (job_id) DO UPDATE SET
                             title = EXCLUDED.title,
+                            role = EXCLUDED.role,
                             company = EXCLUDED.company,
                             location = EXCLUDED.location,
                             salary_min = EXCLUDED.salary_min,

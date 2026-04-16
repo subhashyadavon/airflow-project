@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS jobs CASCADE;
 CREATE TABLE jobs (
     job_id VARCHAR(50) PRIMARY KEY,
     title TEXT NOT NULL,
+    role VARCHAR(100),
     company TEXT,
     location TEXT,
     salary_min NUMERIC,

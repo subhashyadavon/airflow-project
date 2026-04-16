@@ -36,12 +36,14 @@ class JobTransformer:
             elif salary_max:
                 avg_salary = float(salary_max)
 
-            extracted_skills = self.extract_skills(description)
+            extracted_skills = self.extract_skills(f"{title} {description}")
+            extracted_role = self.extract_role(title)
 
             cleaned_jobs.append(
                 {
                     "job_id": job_id,
                     "title": title,
+                    "role": extracted_role,
                     "company": company,
                     "location": location,
                     "salary_min": salary_min,
@@ -59,9 +61,33 @@ class JobTransformer:
         if not text:
             return []
 
+        # Strip HTML tags
+        clean_text = re.sub(r'<[^>]*>', ' ', text)
+        
         found_skills = []
         for skill in TECH_SKILLS:
-            pattern = rf"\b{re.escape(skill)}\b"
-            if re.search(pattern, text, re.IGNORECASE):
+            pattern = rf"(?<!\w){re.escape(skill)}(?!\w)"
+            if re.search(pattern, clean_text, re.IGNORECASE):
                 found_skills.append(skill)
         return found_skills
+
+    def extract_role(self, title):
+        """Extracts a normalized role from the job title."""
+        roles = {
+            "Data Scientist": [r"data scientist", r"machine learning", r"ml engineer", r"ai engineer"],
+            "Data Engineer": [r"data engineer", r"etl", r"data warehouse", r"pipeline"],
+            "DevOps Engineer": [r"devops", r"site reliability", r"sre", r"cloud engineer", r"infrastructure"],
+            "Software Engineer": [r"software engineer", r"developer", r"full stack", r"backend", r"frontend"],
+            "Product Manager": [r"product manager", r"product owner"],
+            "Data Analyst": [r"data analyst", r"business intelligence", r"bi analyst"],
+            "Cybersecurity": [r"security", r"cybersecurity", r"infosec"],
+            "UI/UX Designer": [r"designer", r"ui/ux", r"user experience", r"product designer"],
+            "Intern": [r"intern", r"co-op", r"internship", r"student"]
+        }
+
+        for role_name, patterns in roles.items():
+            for pattern in patterns:
+                if re.search(pattern, title, re.IGNORECASE):
+                    return role_name
+        
+        return "Other"
