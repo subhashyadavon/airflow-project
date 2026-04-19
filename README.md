@@ -54,8 +54,8 @@ This project implements a complete ETL (Extract, Transform, Load) pipeline for p
     docker-compose exec airflow-webserver airflow users create \
         --username admin \
         --password admin \
-        --firstname Subhash \
-        --lastname Yadav \
+        --firstname Admin \
+        --lastname User \
         --role Admin \
         --email [EMAIL_ADDRESS]
     ```
