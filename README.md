@@ -1,5 +1,7 @@
 # Airflow Job Pipeline Project
 
+![Project Dashboard](airflow-project.png)
+
 This project implements a complete ETL (Extract, Transform, Load) pipeline for processing job market data using Apache Airflow. The pipeline extracts job listings from the Adzuna API, transforms and cleans the data, and loads it into a PostgreSQL database.
 
 ## Features
